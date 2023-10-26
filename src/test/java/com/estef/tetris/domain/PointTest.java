@@ -48,8 +48,12 @@ public class PointTest {
     var in = new Point(1, 1).outGrid();
     var out = new Point(1, -1).outGrid();
 
+    var right = new Point(-1, 1).outGrid();
+    var left = new Point(18, 1).outGrid();
     assertEquals(false, in);
-    assertEquals(true, out);
+    assertEquals("down",true, out);
+    assertEquals("right",true, right);
+    assertEquals("left",true, left);
 
   }
 

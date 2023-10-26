@@ -1,6 +1,16 @@
 package com.estef.tetris.domain;
 
+import com.estef.tetris.domain.checkout.FactoryCheckout;
+import com.estef.tetris.utils.Handle;
+
 public class Point {
+
+  private Handle<Point, Boolean> checkoutHandle = FactoryCheckout.create();
+
+  public static final int R = 20;
+  public static final int D = Point.R * 2;
+  public static final int W = Point.D * 8;
+  public static final int H = Point.D * 12;
 
   public final int x;
 
@@ -30,11 +40,17 @@ public class Point {
     return o.x == this.x && o.y == this.y;
   }
 
-  public boolean outGrid(){
-    if(this.y < 0){
-      return true;
-    }
-    return false;
+  public boolean outGrid() {
+  
+    return this.checkoutHandle.run(this);
+
+  }
+
+  public int getX(){
+    return this.x;
+  }
+  public int getY(){
+    return this.y;
   }
 
   @Override

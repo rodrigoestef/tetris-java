@@ -13,7 +13,7 @@ public class PieceTest {
   
     var p = piece.getPoints().iterator().next();
 
-    assertEquals("not pair", new Point(1,25), p);
+    assertEquals("not pair", new Point(7,25), p);
 
   }
 

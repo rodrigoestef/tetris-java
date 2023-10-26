@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import com.estef.tetris.application.ViewModel;
 import com.estef.tetris.domain.Game;
 import com.estef.tetris.domain.Piece;
+import com.estef.tetris.domain.Point;
 import com.estef.tetris.domain.pieces.Cube;
 
 public class Window extends JFrame implements KeyListener, Consumer<Game> {
@@ -18,10 +19,8 @@ public class Window extends JFrame implements KeyListener, Consumer<Game> {
 
   private ViewModel viewModel = ViewModel.getInstance();
 
-  private final int R = 20;
-
   public Window() {
-    this.setSize(this.R * 2 * 8, this.R * 2 * 12);
+    this.setSize(Point.W, Point.H);
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.viewModel.getObservable().subscribe(this);
@@ -32,14 +31,10 @@ public class Window extends JFrame implements KeyListener, Consumer<Game> {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    var w = this.getWidth();
-    var h = this.getHeight();
-
-    var R = this.getWidth() / (2 * 8);
 
     this.piece.getPoints().forEach(p -> {
       g.setColor(Window.this.piece.getColor());
-      g.fillRect((w / 2 + p.x * R) - R, (h - p.y * R) - R, R * 2, R * 2);
+      g.fillRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
     });
   }
 
@@ -49,11 +44,10 @@ public class Window extends JFrame implements KeyListener, Consumer<Game> {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    System.out.println(e.getKeyCode());
     if (e.getKeyCode() == 37) {
-      this.piece.setX(-2);
+      ViewModel.getInstance().right();
     } else if (e.getKeyCode() == 39) {
-      this.piece.setX(2);
+      ViewModel.getInstance().left();
     } else
       ViewModel.getInstance().rotate();
     this.repaint();
@@ -66,7 +60,6 @@ public class Window extends JFrame implements KeyListener, Consumer<Game> {
   @Override
   public void accept(Game t) {
     this.piece = t.getCurrentPiece();
-    System.out.println(this.piece);
     this.repaint();
   }
 

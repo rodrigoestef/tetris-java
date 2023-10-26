@@ -11,7 +11,7 @@ public class Piece implements Function<Point, Point> {
 
   private final Color color;
 
-  private int x = 0;
+  private int x = 6;
 
   private int y = 24;
 
@@ -32,10 +32,23 @@ public class Piece implements Function<Point, Point> {
     this.y = y;
   }
 
-  public void setX(int x) {
-    this.x = this.x + x;
+  public Piece right() {
+
+    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3), this.color,
+        this.x - 2,
+        this.y);
+
+    return this.getNew(newPiece);
   }
 
+  public Piece left() {
+
+    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3), this.color,
+        this.x + 2,
+        this.y);
+
+    return this.getNew(newPiece);
+  }
   public Piece down() {
     var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3), this.color,
         this.x,

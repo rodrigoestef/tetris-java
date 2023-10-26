@@ -24,6 +24,14 @@ public class Game {
    return new Game(this.currentPiece.rotate() , this.nextPiece, this.points); 
   }
 
+  public Game right(){
+   return new Game(this.currentPiece.right() , this.nextPiece, this.points); 
+  }
+
+  public Game left(){
+   return new Game(this.currentPiece.left() , this.nextPiece, this.points); 
+  }
+
   public Piece getCurrentPiece() {
     return this.currentPiece;
   }
