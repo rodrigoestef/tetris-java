@@ -2,7 +2,8 @@ package com.estef.tetris.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.estef.tetris.domain.pieces.*;
+
+import com.estef.tetris.domain.pieces.Ele;
 
 public class Game {
   private Piece currentPiece;
@@ -10,10 +11,15 @@ public class Game {
   private List<Point> points;
 
   public Game() {
-    this.currentPiece = new Cube();
+    this.currentPiece = new Ele();
     this.nextPiece = new Ele();
     this.points = new ArrayList<Point>();
   }
+
+  public Game down(){
+   return new Game(this.currentPiece.down() , this.nextPiece, this.points); 
+  }
+
 
   public Piece getCurrentPiece() {
     return this.currentPiece;
@@ -27,10 +33,10 @@ public class Game {
     return this.points;
   }
 
-  // private Game(Piece currentPiece, Piece nextPiece, List<Point> points) {
-  //   this.currentPiece = currentPiece;
-  //   this.nextPiece = nextPiece;
-  //   this.points = points;
-  // }
+  private Game(Piece currentPiece, Piece nextPiece, List<Point> points) {
+    this.currentPiece = currentPiece;
+    this.nextPiece = nextPiece;
+    this.points = points;
+  }
 
 }

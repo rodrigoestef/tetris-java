@@ -1,6 +1,8 @@
 package com.estef.tetris;
 
+import com.estef.tetris.application.ViewModel;
 import com.estef.tetris.view.PieceView;
+import com.estef.tetris.view.Window;
 
 /**
  * Hello world!
@@ -11,9 +13,10 @@ public class App {
     // new Window(new Paralel());
     // new Window(new Line());
     // new Window(new Scade());
-    // new Window(new Ele());
+    new Window();
 
     new PieceView();
+    ViewModel.getInstance().start();
     // new PieceView(new Line());
     // new PieceView(new Scade());
     // new PieceView(new Ele());

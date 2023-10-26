@@ -53,6 +53,10 @@ public class Observable<T> implements Consumer<Observable<T>.Observer> {
 
   }
 
+  public T getCurrent(){
+    return this.value;
+  }
+
   @Override
   public void accept(Observer t) {
     t.accept(this.value);

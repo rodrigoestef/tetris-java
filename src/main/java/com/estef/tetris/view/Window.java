@@ -3,33 +3,28 @@ package com.estef.tetris.view;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.function.Consumer;
 
 import javax.swing.JFrame;
 
+import com.estef.tetris.application.ViewModel;
+import com.estef.tetris.domain.Game;
 import com.estef.tetris.domain.Piece;
+import com.estef.tetris.domain.pieces.Cube;
 
-public class Window extends JFrame implements KeyListener {
+public class Window extends JFrame implements KeyListener, Consumer<Game> {
 
-  private Piece piece;
+  private Piece piece = new Cube();
+
+  private ViewModel viewModel = ViewModel.getInstance();
 
   private final int R = 20;
 
-  public Window(Piece piece) {
-    this.piece = piece;
+  public Window() {
     this.setSize(this.R * 2 * 8, this.R * 2 * 12);
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    new Timer().scheduleAtFixedRate(new TimerTask() {
-      @Override
-      public void run() {
-        Window.this.piece.down();
-        Window.this.repaint();
-      }
-    }, 1000, 1000);
-
+    this.viewModel.getObservable().subscribe(this);
     this.addKeyListener(this);
 
   }
@@ -66,6 +61,13 @@ public class Window extends JFrame implements KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
+  }
+
+  @Override
+  public void accept(Game t) {
+    this.piece = t.getCurrentPiece();
+    System.out.println(this.piece);
+    this.repaint();
   }
 
 }
