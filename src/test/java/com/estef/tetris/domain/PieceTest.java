@@ -11,7 +11,7 @@ public class PieceTest {
   public void mustNotPair(){
     var piece = new Piece(new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0), Color.BLUE);
   
-    var p = piece.getPoints().next();
+    var p = piece.getPoints().iterator().next();
 
     assertEquals("not pair", new Point(1,25), p);
 

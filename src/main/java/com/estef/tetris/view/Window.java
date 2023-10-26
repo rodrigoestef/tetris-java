@@ -37,7 +37,7 @@ public class Window extends JFrame implements KeyListener, Consumer<Game> {
 
     var R = this.getWidth() / (2 * 8);
 
-    this.piece.getPoints().forEachRemaining(p -> {
+    this.piece.getPoints().forEach(p -> {
       g.setColor(Window.this.piece.getColor());
       g.fillRect((w / 2 + p.x * R) - R, (h - p.y * R) - R, R * 2, R * 2);
     });

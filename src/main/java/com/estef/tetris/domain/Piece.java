@@ -1,9 +1,9 @@
 package com.estef.tetris.domain;
 
 import java.awt.Color;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class Piece implements Function<Point, Point> {
 
@@ -41,7 +41,9 @@ public class Piece implements Function<Point, Point> {
         this.x,
         this.y - 2);
 
-    if(newPiece.getY() < 0){
+    var out = newPiece.getPoints().filter(Point::outGrid).toList().size() > 0;
+
+    if(out){
       return this;
     }
 
@@ -67,17 +69,18 @@ public class Piece implements Function<Point, Point> {
     return new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.color, this.x, this.y);
   }
 
-  public Iterator<Point> getPoints() {
-    return this.points.stream().map(this).iterator();
+  public Stream<Point> getPoints() {
+    return this.points.stream().map(this);
   }
 
-  public Iterator<Point> getCentralyPoints() {
-    return this.points.stream().iterator();
+  public Stream<Point> getCentralyPoints() {
+    return this.points.stream();
   }
 
   @Override
   public String toString() {
-    return "" + this.x + " " + this.y;
+    return this.points.stream().map(this).toList().toString();
+
   }
 
   @Override

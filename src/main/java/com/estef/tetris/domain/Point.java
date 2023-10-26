@@ -30,6 +30,13 @@ public class Point {
     return o.x == this.x && o.y == this.y;
   }
 
+  public boolean outGrid(){
+    if(this.y < 0){
+      return true;
+    }
+    return false;
+  }
+
   @Override
   public String toString() {
     return "( " + x + " , " + y + " )";

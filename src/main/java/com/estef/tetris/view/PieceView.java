@@ -33,7 +33,7 @@ public class PieceView extends JFrame implements Consumer<Game> {
 
     var R = this.getWidth() / 10;
 
-    this.piece.getCentralyPoints().forEachRemaining(p -> {
+    this.piece.getCentralyPoints().forEach(p -> {
       g.setColor(PieceView.this.piece.getColor());
       g.fillRect((w / 2 + p.x * R) - R, (h / 2 - p.y * R) - R, R * 2, R * 2);
 
