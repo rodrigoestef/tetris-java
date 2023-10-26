@@ -64,7 +64,7 @@ public class Piece implements Function<Point, Point> {
 
     var points = this.points.stream().map(Point::rotate).toList();
 
-    return new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.color);
+    return new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.color, this.x, this.y);
   }
 
   public Iterator<Point> getPoints() {

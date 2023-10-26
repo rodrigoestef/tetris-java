@@ -20,6 +20,9 @@ public class Game {
    return new Game(this.currentPiece.down() , this.nextPiece, this.points); 
   }
 
+  public Game rotate(){
+   return new Game(this.currentPiece.rotate() , this.nextPiece, this.points); 
+  }
 
   public Piece getCurrentPiece() {
     return this.currentPiece;

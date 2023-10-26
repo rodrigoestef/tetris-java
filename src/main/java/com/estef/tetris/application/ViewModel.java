@@ -29,6 +29,12 @@ public class ViewModel extends TimerTask {
     return this.observable;
   }
 
+  public void rotate(){
+    var game = this.observable.getCurrent();
+
+    this.observable.next(game.rotate());
+  }
+
   @Override
   public void run() {
  

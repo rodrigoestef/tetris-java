@@ -55,7 +55,7 @@ public class Window extends JFrame implements KeyListener, Consumer<Game> {
     } else if (e.getKeyCode() == 39) {
       this.piece.setX(2);
     } else
-      this.piece = this.piece.rotate();
+      ViewModel.getInstance().rotate();
     this.repaint();
   }
 
