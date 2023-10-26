@@ -1,30 +1,27 @@
 package com.estef.tetris.view;
 
 import java.awt.Graphics;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.function.Consumer;
 
 import javax.swing.JFrame;
 
+import com.estef.tetris.application.ViewModel;
+import com.estef.tetris.domain.Game;
 import com.estef.tetris.domain.Piece;
+import com.estef.tetris.domain.pieces.Cube;
 
-public class PieceView extends JFrame {
+public class PieceView extends JFrame implements Consumer<Game> {
 
-  private Piece piece;
+  private Piece piece = new Cube();
 
-  public PieceView(Piece piece) {
-    this.piece = piece;
+  private ViewModel viewModel = ViewModel.getInstance();
+
+  public PieceView() {
     this.setSize(200, 200);
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    new Timer().scheduleAtFixedRate(new TimerTask() {
-      @Override
-      public void run() {
-        PieceView.this.piece = PieceView.this.piece.rotate();
-        PieceView.this.repaint();
-      }
-    }, 0, 1000);
+    this.viewModel.getObservable().subscribe(this);
 
   }
 
@@ -36,11 +33,20 @@ public class PieceView extends JFrame {
 
     var R = this.getWidth() / 10;
 
-    this.piece.getPoints().forEachRemaining(p -> {
+    this.piece.getCentralyPoints().forEachRemaining(p -> {
       g.setColor(PieceView.this.piece.getColor());
-      g.fillRect((int) (w / 2 + p.x * R) - R, (int) (h / 2 - p.y * R) - R, R * 2, R * 2);
+      g.fillRect((w / 2 + p.x * R) - R, (h / 2 - p.y * R) - R, R * 2, R * 2);
 
     });
+  }
+
+  @Override
+  public void accept(Game t) {
+  
+    this.piece = t.getNextPiece();
+
+    this.repaint();
+
   }
 
 }
