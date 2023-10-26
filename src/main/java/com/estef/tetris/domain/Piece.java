@@ -41,13 +41,7 @@ public class Piece implements Function<Point, Point> {
         this.x,
         this.y - 2);
 
-    var out = newPiece.getPoints().filter(Point::outGrid).toList().size() > 0;
-
-    if(out){
-      return this;
-    }
-
-    return newPiece;
+    return this.getNew(newPiece);
   }
 
   public int getX() {
@@ -66,7 +60,20 @@ public class Piece implements Function<Point, Point> {
 
     var points = this.points.stream().map(Point::rotate).toList();
 
-    return new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.color, this.x, this.y);
+    var newPiece = new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.color, this.x, this.y);
+
+    return this.getNew(newPiece);
+
+  }
+
+  private Piece getNew(Piece newPiece) {
+    var out = newPiece.getPoints().filter(Point::outGrid).toList().size() > 0;
+
+    if (out) {
+      return this;
+    }
+
+    return newPiece;
   }
 
   public Stream<Point> getPoints() {
