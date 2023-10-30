@@ -46,6 +46,10 @@ public class Point {
 
   }
 
+  public boolean filterLine(int i){
+    return this.getY() == i;
+  }
+
   public int getX(){
     return this.x;
   }

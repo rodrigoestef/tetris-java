@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.estef.tetris.domain.checkpoints.RemoveLinesHandle;
 import com.estef.tetris.domain.pieces.Cube;
 import com.estef.tetris.domain.pieces.Ele;
 import com.estef.tetris.domain.pieces.Line;
@@ -98,10 +99,14 @@ public class Game {
     return this.points;
   }
 
-  private Game(Piece currentPiece, Piece nextPiece, List<Point> points) {
+  public Game(Piece currentPiece, Piece nextPiece, List<Point> points) {
     this.currentPiece = currentPiece;
     this.nextPiece = nextPiece;
     this.points = points;
+
+    var handle = new RemoveLinesHandle();
+
+    handle.run(this.points);
   }
 
 }
