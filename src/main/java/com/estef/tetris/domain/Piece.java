@@ -57,6 +57,10 @@ public class Piece implements Function<Point, Point> {
     return this.getNew(newPiece);
   }
 
+  public boolean colision(Point point) {
+    return this.getPoints().filter(point::equals).toList().size() > 0 ? true : false;
+  }
+
   public int getX() {
     return this.x;
   }

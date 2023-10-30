@@ -44,7 +44,9 @@ public class Game {
   public Game down() {
     var game = new Game(this.currentPiece.down(), this.nextPiece, this.points);
 
-    if (game.currentPiece.equals(this.currentPiece)) {
+    var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
+
+    if (hasCollision || game.currentPiece.equals(this.currentPiece)) {
       this.points.addAll(this.currentPiece.getPoints().toList());
       return new Game(this.nextPiece, this.getRandonPiece(), this.points);
     }
@@ -58,11 +60,30 @@ public class Game {
   }
 
   public Game right() {
-    return new Game(this.currentPiece.right(), this.nextPiece, this.points);
+
+    var game = new Game(this.currentPiece.right(), this.nextPiece, this.points);
+
+    var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
+    
+    if (hasCollision) {
+      this.points.addAll(this.currentPiece.getPoints().toList());
+      return new Game(this.nextPiece, this.getRandonPiece(), this.points);
+    }
+
+    return game;
   }
 
   public Game left() {
-    return new Game(this.currentPiece.left(), this.nextPiece, this.points);
+    var game = new Game(this.currentPiece.left(), this.nextPiece, this.points);
+
+    var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
+    
+    if (hasCollision) {
+      this.points.addAll(this.currentPiece.getPoints().toList());
+      return new Game(this.nextPiece, this.getRandonPiece(), this.points);
+    }
+
+    return game;
   }
 
   public Piece getCurrentPiece() {
