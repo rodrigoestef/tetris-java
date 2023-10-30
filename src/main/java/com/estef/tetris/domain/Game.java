@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.estef.tetris.domain.checkpoints.GravityPointsHandle;
 import com.estef.tetris.domain.checkpoints.RemoveLinesHandle;
+import com.estef.tetris.domain.checkpoints.RemovePointsModel;
 import com.estef.tetris.domain.pieces.Cube;
 import com.estef.tetris.domain.pieces.Ele;
 import com.estef.tetris.domain.pieces.Line;
@@ -106,7 +108,9 @@ public class Game {
 
     var handle = new RemoveLinesHandle();
 
-    handle.run(this.points);
+    handle.setNext(new GravityPointsHandle());
+
+    handle.run(new RemovePointsModel(points, new ArrayList<Integer>()));
   }
 
 }

@@ -1,13 +1,12 @@
 package com.estef.tetris.domain.checkpoints;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.function.Consumer;
 
 import com.estef.tetris.domain.Point;
 import com.estef.tetris.utils.Handle;
 
-public class RemoveLinesHandle extends Handle<List<Point>, Void> implements Consumer<Point> {
+public class RemoveLinesHandle extends Handle<RemovePointsModel, Void> implements Consumer<Point> {
 
   public RemoveLinesHandle() {
     this.setNext(new DoNottingHandle());
@@ -16,7 +15,9 @@ public class RemoveLinesHandle extends Handle<List<Point>, Void> implements Cons
   private HashSet<Integer> knowLines = new HashSet<Integer>();
 
   @Override
-  public Void run(List<Point> points) {
+  public Void run(RemovePointsModel value) {
+
+    var points = value.points;
 
     points.forEach(this);
 
@@ -24,10 +25,11 @@ public class RemoveLinesHandle extends Handle<List<Point>, Void> implements Cons
       var linePoints = points.stream().filter(p -> p.filterLine(line)).toList();
       if (linePoints.size() == 8) {
         points.removeAll(linePoints);
+        value.linesRemoved.add(line);
       }
     });
 
-    return super.run(points);
+    return super.run(value);
   }
 
   @Override

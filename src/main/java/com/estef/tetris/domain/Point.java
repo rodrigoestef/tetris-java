@@ -41,19 +41,20 @@ public class Point {
   }
 
   public boolean outGrid() {
-  
+
     return this.checkoutHandle.run(this);
 
   }
 
-  public boolean filterLine(int i){
+  public boolean filterLine(int i) {
     return this.getY() == i;
   }
 
-  public int getX(){
+  public int getX() {
     return this.x;
   }
-  public int getY(){
+
+  public int getY() {
     return this.y;
   }
 
