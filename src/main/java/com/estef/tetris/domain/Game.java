@@ -25,8 +25,6 @@ public class Game {
   private Class<?>[] pieces = { Cube.class, Ele.class, Line.class, Paralel.class, Scade.class };
 
   public Game() {
-    this.currentPiece = new Ele();
-    this.nextPiece = new Ele();
     this.points = new ArrayList<Point>();
     this.currentPiece = this.getRandonPiece();
     this.nextPiece = this.getRandonPiece();
