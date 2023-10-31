@@ -1,12 +1,9 @@
 package com.estef.tetris.application;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.estef.tetris.domain.Game;
-import com.estef.tetris.domain.Point;
-import com.estef.tetris.domain.pieces.Ele;
 import com.estef.tetris.utils.Observable;
 
 public class ViewModel extends TimerTask {
@@ -53,6 +50,10 @@ public class ViewModel extends TimerTask {
   public void run() {
 
     var game = this.observable.getCurrent();
+
+    if(game.isGameOver()){
+      return;
+    }
 
     this.observable.next(game.down());
 

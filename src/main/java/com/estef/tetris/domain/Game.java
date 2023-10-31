@@ -18,6 +18,8 @@ public class Game {
   private Piece nextPiece;
   private List<Point> points;
 
+  private boolean gameOver = false;
+
   private Random random = new Random();
 
   private Class<?>[] pieces = { Cube.class, Ele.class, Line.class, Paralel.class, Scade.class };
@@ -45,6 +47,12 @@ public class Game {
   }
 
   public Game down() {
+
+
+    if(this.gameOver){
+      return this;
+    }
+
     var game = new Game(this.currentPiece.down(), this.nextPiece, this.points);
 
     var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
@@ -59,6 +67,11 @@ public class Game {
   }
 
   public Game rotate() {
+    
+    if(this.gameOver){
+      return this;
+    }
+
     var game = new Game(this.currentPiece.rotate(), this.nextPiece, this.points);
 
     if (game.hasCollision()){
@@ -69,6 +82,10 @@ public class Game {
   }
 
   public Game right() {
+
+    if(this.gameOver){
+      return this;
+    }
 
     var game = new Game(this.currentPiece.right(), this.nextPiece, this.points);
 
@@ -83,6 +100,11 @@ public class Game {
   }
 
   public Game left() {
+
+    if(this.gameOver){
+      return this;
+    }
+
     var game = new Game(this.currentPiece.left(), this.nextPiece, this.points);
 
     var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
@@ -111,6 +133,10 @@ public class Game {
     return this.points;
   }
 
+  public boolean isGameOver(){
+    return this.gameOver;
+  }
+
   public Game(Piece currentPiece, Piece nextPiece, List<Point> points) {
     this.currentPiece = currentPiece;
     this.nextPiece = nextPiece;
@@ -121,6 +147,11 @@ public class Game {
     handle.setNext(new GravityPointsHandle());
 
     handle.run(new RemovePointsModel(points, new ArrayList<Integer>()));
+  
+    if(this.hasCollision()){
+      this.gameOver = true;
+    }
+
   }
 
 }
