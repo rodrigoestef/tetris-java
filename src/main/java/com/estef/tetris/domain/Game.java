@@ -59,7 +59,13 @@ public class Game {
   }
 
   public Game rotate() {
-    return new Game(this.currentPiece.rotate(), this.nextPiece, this.points);
+    var game = new Game(this.currentPiece.rotate(), this.nextPiece, this.points);
+
+    if (game.hasCollision()){
+      return this;
+    }
+
+      return game;
   }
 
   public Game right() {
@@ -67,7 +73,7 @@ public class Game {
     var game = new Game(this.currentPiece.right(), this.nextPiece, this.points);
 
     var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
-    
+
     if (hasCollision) {
       this.points.addAll(this.currentPiece.getPoints().toList());
       return new Game(this.nextPiece, this.getRandonPiece(), this.points);
@@ -80,13 +86,17 @@ public class Game {
     var game = new Game(this.currentPiece.left(), this.nextPiece, this.points);
 
     var hasCollision = this.points.stream().filter(game.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
-    
+
     if (hasCollision) {
       this.points.addAll(this.currentPiece.getPoints().toList());
       return new Game(this.nextPiece, this.getRandonPiece(), this.points);
     }
 
     return game;
+  }
+
+  public boolean hasCollision() {
+    return this.points.stream().filter(this.getCurrentPiece()::colision).toList().size() > 0 ? true : false;
   }
 
   public Piece getCurrentPiece() {
