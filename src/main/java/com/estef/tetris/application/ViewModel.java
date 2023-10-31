@@ -16,6 +16,10 @@ public class ViewModel extends TimerTask {
     new Timer().scheduleAtFixedRate(this, 1000, 1000);
   }
 
+  public void newGame(){
+    observable.next(new Game());
+  }
+
   private ViewModel() {
 
   }
