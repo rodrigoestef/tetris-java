@@ -1,76 +1,60 @@
 package com.estef.tetris.view;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.function.Consumer;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
+import com.estef.tetris.application.KeyController;
 import com.estef.tetris.application.ViewModel;
 import com.estef.tetris.domain.Game;
-import com.estef.tetris.domain.Piece;
-import com.estef.tetris.domain.Point;
-import com.estef.tetris.domain.pieces.Cube;
 
-public class Window extends JFrame implements KeyListener, Consumer<Game> {
-
-  private Piece piece = new Cube();
-  private List<Point> points = new ArrayList<Point>();
-
-  private ViewModel viewModel = ViewModel.getInstance();
-
+public class Window extends JFrame implements Consumer<Game> {
   public Window() {
-    this.setSize(Point.W, Point.H);
-    this.setVisible(true);
+
+    ViewModel.getInstance().getObservable().subscribe(this);
+
+    this.setSize(500, 500);
+    this.setTitle("Tetris");
+    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.viewModel.getObservable().subscribe(this);
-    this.addKeyListener(this);
 
-  }
+    this.setLayout(new GridBagLayout());
+    var c = new GridBagConstraints();
+    c.fill = GridBagConstraints.BOTH;
+    c.weightx = 0.7;
+    c.weighty = 0.7;
+    c.gridx = 0;
+    c.gridy = 0;
+    this.add(new Grid(), c);
+    c.fill = GridBagConstraints.BOTH;
+    c.weightx = 0.3;
+    c.weighty = 0;
+    c.gridx = 1;
+    c.gridy = 0;
+    this.add(new PieceView(), c);
 
-  @Override
-  public void paint(Graphics g) {
-    super.paint(g);
+    this.addKeyListener(new KeyController());
 
-    this.points.forEach(p ->{
-      g.setColor(Color.BLACK);
-      g.fillRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
-    });
-
-    this.piece.getPoints().forEach(p -> {
-      g.setColor(Window.this.piece.getColor());
-      g.fillRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
-    });
-  }
-
-  @Override
-  public void keyTyped(KeyEvent e) {
-  }
-
-  @Override
-  public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == 37) {
-      ViewModel.getInstance().right();
-    } else if (e.getKeyCode() == 39) {
-      ViewModel.getInstance().left();
-    } else
-      ViewModel.getInstance().rotate();
-    this.repaint();
-  }
-
-  @Override
-  public void keyReleased(KeyEvent e) {
+    this.setVisible(true);
   }
 
   @Override
   public void accept(Game t) {
-    this.piece = t.getCurrentPiece();
-    this.points = t.getPoints();
-    this.repaint();
-  }
+  
+    if(!t.isGameOver()){
+      return;
+    }
 
+    var response = JOptionPane.showConfirmDialog(this, "Start new game ?", "Game Over", JOptionPane.YES_NO_OPTION);
+
+    if(response == JOptionPane.YES_OPTION){
+      ViewModel.getInstance().newGame();
+      return;
+    }
+
+    System.exit(0);
+  }
 }

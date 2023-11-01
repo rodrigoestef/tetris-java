@@ -3,14 +3,14 @@ package com.estef.tetris.view;
 import java.awt.Graphics;
 import java.util.function.Consumer;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import com.estef.tetris.application.ViewModel;
 import com.estef.tetris.domain.Game;
 import com.estef.tetris.domain.Piece;
 import com.estef.tetris.domain.pieces.Cube;
 
-public class PieceView extends JFrame implements Consumer<Game> {
+public class PieceView extends JPanel implements Consumer<Game> {
 
   private Piece piece = new Cube();
 
@@ -18,20 +18,19 @@ public class PieceView extends JFrame implements Consumer<Game> {
 
   public PieceView() {
     this.setSize(200, 200);
-    this.setVisible(true);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     this.viewModel.getObservable().subscribe(this);
-
   }
 
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    var w = this.getWidth();
-    var h = this.getHeight();
 
-    var R = this.getWidth() / 10;
+    g.drawRect(0, 0, 200, 200);
+
+    var w = 200;
+    var h = 200;
+
+    var R = 200 / 10;
 
     this.piece.getCentralyPoints().forEach(p -> {
       g.setColor(PieceView.this.piece.getColor());
@@ -42,7 +41,7 @@ public class PieceView extends JFrame implements Consumer<Game> {
 
   @Override
   public void accept(Game t) {
-  
+
     this.piece = t.getNextPiece();
 
     this.repaint();
