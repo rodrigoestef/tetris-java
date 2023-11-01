@@ -50,6 +50,12 @@ public class ViewModel extends TimerTask {
     this.observable.next(game.left());
   }
 
+  public void down() {
+    var game = this.observable.getCurrent();
+
+    this.observable.next(game.down());
+  }
+
   @Override
   public void run() {
 

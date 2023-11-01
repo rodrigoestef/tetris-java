@@ -4,11 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 
-// 37
-// ￿
-// 39
-//  
-// 32
 public class KeyController implements KeyListener {
 
   private static interface Fun {
@@ -22,6 +17,7 @@ public class KeyController implements KeyListener {
     this.table.put(37, () -> ViewModel.getInstance().right());
     this.table.put(39, () -> ViewModel.getInstance().left());
     this.table.put(32, () -> ViewModel.getInstance().rotate());
+    this.table.put(40, () -> ViewModel.getInstance().down());
 
   }
 
