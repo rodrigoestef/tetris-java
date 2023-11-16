@@ -1,5 +1,7 @@
 package com.estef.tetris.domain;
 
+import java.awt.Color;
+
 import com.estef.tetris.domain.checkout.FactoryCheckout;
 import com.estef.tetris.utils.Handle;
 
@@ -16,15 +18,18 @@ public class Point {
 
   public final int y;
 
-  public Point(int x, int y) {
+  public final Color color;
+
+  public Point(int x, int y, Color color) {
 
     this.x = x;
     this.y = y;
 
+    this.color = color;
   }
 
   public Point rotate() {
-    return new Point(-y, x);
+    return new Point(-y, x, this.color);
   }
 
   @Override
@@ -38,6 +43,10 @@ public class Point {
     Point o = (Point) obj;
 
     return o.x == this.x && o.y == this.y;
+  }
+
+  public Point down() {
+    return new Point(x, y - 2, color);
   }
 
   public boolean outGrid() {

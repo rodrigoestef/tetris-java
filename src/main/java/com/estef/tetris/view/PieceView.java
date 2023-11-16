@@ -1,5 +1,6 @@
 package com.estef.tetris.view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.function.Consumer;
 
@@ -35,6 +36,8 @@ public class PieceView extends JPanel implements Consumer<Game> {
     this.piece.getCentralyPoints().forEach(p -> {
       g.setColor(PieceView.this.piece.getColor());
       g.fillRect((w / 2 + p.x * R) - R, (h / 2 - p.y * R) - R, R * 2, R * 2);
+      g.setColor(Color.BLACK);
+      g.drawRect((w / 2 + p.x * R) - R, (h / 2 - p.y * R) - R, R * 2, R * 2);
 
     });
   }

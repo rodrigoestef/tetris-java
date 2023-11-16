@@ -38,7 +38,7 @@ public class GravityPointsHandle extends Handle<RemovePointsModel, Void>
 
     this.points.removeAll(upers);
 
-    this.points.addAll(upers.stream().map(p -> new Point(p.getX(), p.getY() - 2)).toList());
+    this.points.addAll(upers.stream().map(Point::down).toList());
 
   }
 

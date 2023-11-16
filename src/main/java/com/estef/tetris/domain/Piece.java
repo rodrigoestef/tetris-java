@@ -130,7 +130,7 @@ public class Piece implements Function<Point, Point> {
     if (y % 2 == 0)
       y++;
 
-    return new Point(x, y);
+    return new Point(x, y, this.color);
   }
 
 }

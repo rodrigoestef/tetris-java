@@ -31,14 +31,18 @@ public class Grid extends JPanel implements Consumer<Game> {
 
     g.drawRect(0, 0, Point.W, Point.H);
 
-    this.points.forEach(p ->{
-      g.setColor(Color.BLACK);
+    this.points.forEach(p -> {
+      g.setColor(p.color);
       g.fillRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
+      g.setColor(Color.BLACK);
+      g.drawRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
     });
 
     this.piece.getPoints().forEach(p -> {
       g.setColor(Grid.this.piece.getColor());
       g.fillRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
+      g.setColor(Color.BLACK);
+      g.drawRect((p.x * Point.R) - Point.R, (Point.H - p.y * Point.R) - Point.R, Point.D, Point.D);
     });
   }
 
