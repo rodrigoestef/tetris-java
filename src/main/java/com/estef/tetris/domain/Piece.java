@@ -1,6 +1,5 @@
 package com.estef.tetris.domain;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -9,23 +8,17 @@ public class Piece implements Function<Point, Point> {
 
   private final List<Point> points;
 
-  private final Color color;
-
   private int x = 6;
 
   private int y = 24;
 
-  public Piece(Point p1, Point p2, Point p3, Point p4, Color color) {
-
-    this.color = color;
+  public Piece(Point p1, Point p2, Point p3, Point p4) {
 
     this.points = List.of(p1, p2, p3, p4);
 
   }
 
-  private Piece(Point p1, Point p2, Point p3, Point p4, Color color, int x, int y) {
-
-    this.color = color;
+  private Piece(Point p1, Point p2, Point p3, Point p4, int x, int y) {
 
     this.points = List.of(p1, p2, p3, p4);
     this.x = x;
@@ -34,7 +27,7 @@ public class Piece implements Function<Point, Point> {
 
   public Piece right() {
 
-    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3), this.color,
+    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3),
         this.x - 2,
         this.y);
 
@@ -43,14 +36,15 @@ public class Piece implements Function<Point, Point> {
 
   public Piece left() {
 
-    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3), this.color,
+    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3),
         this.x + 2,
         this.y);
 
     return this.getNew(newPiece);
   }
+
   public Piece down() {
-    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3), this.color,
+    var newPiece = new Piece(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3),
         this.x,
         this.y - 2);
 
@@ -69,15 +63,11 @@ public class Piece implements Function<Point, Point> {
     return this.y;
   }
 
-  public Color getColor() {
-    return this.color;
-  }
-
   public Piece rotate() {
 
     var points = this.points.stream().map(Point::rotate).toList();
 
-    var newPiece = new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.color, this.x, this.y);
+    var newPiece = new Piece(points.get(0), points.get(1), points.get(2), points.get(3), this.x, this.y);
 
     return this.getNew(newPiece);
 
@@ -130,7 +120,7 @@ public class Piece implements Function<Point, Point> {
     if (y % 2 == 0)
       y++;
 
-    return new Point(x, y, this.color);
+    return p.setCoodenate(x, y);
   }
 
 }

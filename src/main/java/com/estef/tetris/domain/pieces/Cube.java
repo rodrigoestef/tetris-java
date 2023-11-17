@@ -9,7 +9,7 @@ public class Cube extends Piece {
 
   public Cube() {
     super(new Point(1, 1, Color.YELLOW), new Point(1, -1, Color.YELLOW), new Point(-1, -1, Color.YELLOW),
-        new Point(-1, 1, Color.YELLOW), Color.YELLOW);
+        new Point(-1, 1, Color.YELLOW));
   }
 
 }

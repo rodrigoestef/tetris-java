@@ -34,7 +34,7 @@ public class PieceView extends JPanel implements Consumer<Game> {
     var R = 200 / 10;
 
     this.piece.getCentralyPoints().forEach(p -> {
-      g.setColor(PieceView.this.piece.getColor());
+      g.setColor(p.color);
       g.fillRect((w / 2 + p.x * R) - R, (h / 2 - p.y * R) - R, R * 2, R * 2);
       g.setColor(Color.BLACK);
       g.drawRect((w / 2 + p.x * R) - R, (h / 2 - p.y * R) - R, R * 2, R * 2);

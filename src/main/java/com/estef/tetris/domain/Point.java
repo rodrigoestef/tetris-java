@@ -28,6 +28,10 @@ public class Point {
     this.color = color;
   }
 
+  public Point setCoodenate(int x, int y) {
+    return new Point(x, y, this.color);
+  }
+
   public Point rotate() {
     return new Point(-y, x, this.color);
   }
